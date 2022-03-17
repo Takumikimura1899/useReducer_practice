@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useReducer, useState } from 'react';
 
 type State = {
   id: number;
@@ -17,19 +17,21 @@ const reducer = (state: State[], action: Action): State[] => {
   }
 };
 
+const initialState: State[] = [{ id: 0, text: '最初のTodo' }];
+
 export const TodoList = () => {
   const [text, setText] = useState<string>('test');
-  const TodoList = [
-    {
-      id: 1,
-      text: 'test',
-    },
-    {
-      id: 2,
-      text: 'test2',
-    },
-  ];
-  //   const [state, dispatch] = useReducer(first, second, third)
+  //   const TodoList = [
+  //     {
+  //       id: 1,
+  //       text: 'test',
+  //     },
+  //     {
+  //       id: 2,
+  //       text: 'test2',
+  //     },
+  //   ];
+  const [TodoList, dispatch] = useReducer(reducer, initialState);
 
   return (
     <div>
@@ -41,7 +43,7 @@ export const TodoList = () => {
           onChange={(e) => setText(e.target.value)}
         />
       </label>
-      <button>Add Todo</button>
+      <button onClick={() => dispatch({ type: 'ADD', text })}>Add Todo</button>
       <ul>
         {TodoList.map((todo) => (
           <li key={todo.id}>{todo.text}</li>
