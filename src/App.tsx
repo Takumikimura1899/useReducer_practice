@@ -13,6 +13,26 @@ function App() {
     return previousValue + currentValue;
   }, 100);
 
+  type User = {
+    name: string;
+    email: string;
+  };
+
+  const users: User[] = [
+    { name: 'john', email: 'john@example.com' },
+    { name: 'ken', email: 'ken@example.com' },
+    { name: 'david', email: 'david@example.com' },
+  ];
+
+  const mailAddresses = users.reduce(
+    (previousValue: any[], currentValue: User): User[] => {
+      return previousValue.concat(currentValue.email);
+    },
+    []
+  );
+
+  console.log(mailAddresses);
+
   return (
     <div className='App'>
       <p>{sum}</p>
