@@ -2,6 +2,7 @@ import { useReducer, useState } from 'react';
 import logo from './logo.svg';
 import './App.css';
 import { Counter } from './components/Counter';
+import { TodoList } from './components/TodoList';
 
 function App() {
   const [count, setCount] = useState(0);
@@ -38,6 +39,7 @@ function App() {
     <div className='App'>
       <p>{sum}</p>
       <Counter />
+      <TodoList />
     </div>
   );
 }
