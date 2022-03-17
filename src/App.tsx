@@ -1,6 +1,7 @@
-import { useState } from 'react';
+import { useReducer, useState } from 'react';
 import logo from './logo.svg';
 import './App.css';
+import { Counter } from './components/Counter';
 
 function App() {
   const [count, setCount] = useState(0);
@@ -36,6 +37,7 @@ function App() {
   return (
     <div className='App'>
       <p>{sum}</p>
+      <Counter />
     </div>
   );
 }
