@@ -1,5 +1,22 @@
 import React, { useState } from 'react';
 
+type State = {
+  id: number;
+  text: string;
+};
+
+type Action = {
+  type: 'ADD';
+  text: string;
+};
+
+const reducer = (state: State[], action: Action): State[] => {
+  switch (action.type) {
+    case 'ADD':
+      return [...state, { id: state.slice(-1)[0].id + 1, text: action.text }];
+  }
+};
+
 export const TodoList = () => {
   const [text, setText] = useState<string>('test');
   const TodoList = [
@@ -12,6 +29,7 @@ export const TodoList = () => {
       text: 'test2',
     },
   ];
+  //   const [state, dispatch] = useReducer(first, second, third)
 
   return (
     <div>
