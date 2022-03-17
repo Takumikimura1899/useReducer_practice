@@ -22,9 +22,9 @@ export const Counter = () => {
     <>
       <div>
         <h1>Counter</h1>
-        <h2>カウント: ここにカウンタ数を表示</h2>
-        <button>+</button>
-        <button>-</button>
+        <h2>カウント: {state.count}</h2>
+        <button onClick={() => dispatch('INCREMENT')}>+</button>
+        <button onClick={() => dispatch('DECREMENT')}>-</button>
       </div>
     </>
   );
