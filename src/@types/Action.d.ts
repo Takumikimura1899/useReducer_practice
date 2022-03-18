@@ -5,5 +5,4 @@ declare type Action =
   | { type: 'empty' }
   | { type: 'edit'; id: number; value: string }
   | { type: 'check'; id: number; checked: boolean }
-  | { type: 'remove'; id: number; checked: boolean }
   | { type: 'remove'; id: number; removed: boolean };

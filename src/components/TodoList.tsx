@@ -37,13 +37,7 @@ export const TodoList = () => {
   };
 
   const handleOnRemove = (id: number, removed: boolean) => {
-    const newTodos = todos.map((todo) => {
-      if (todo.id === id) {
-        todo.removed = !removed;
-      }
-      return todo;
-    });
-    setTodos(newTodos);
+    dispatch({ type: 'remove', id, removed });
   };
 
   const handleOnEmpty = () => {

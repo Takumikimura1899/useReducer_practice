@@ -37,6 +37,17 @@ export const reducer = (state: State, action: Action): State => {
       return { ...state, todos: newTodos };
     }
 
+    case 'remove': {
+      const newTodos = state.todos.map((todo) => {
+        if (todo.id === action.id) {
+          todo.removed = !action.removed;
+        }
+        return todo;
+      });
+
+      return { ...state, todos: newTodos };
+    }
+
     default: {
       return state;
     }
