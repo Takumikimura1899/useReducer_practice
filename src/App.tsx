@@ -40,7 +40,8 @@ function App() {
     <div className='App'>
       {/* <p>{sum}</p> */}
       {/* <Counter /> */}
-      <Bank />
+      {/* <Bank /> */}
+      <TodoList />
     </div>
   );
 }
