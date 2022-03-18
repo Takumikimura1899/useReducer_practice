@@ -64,6 +64,21 @@ export const TodoList = () => {
     setTodos(newTodos);
   };
 
+  const filteredTodos = todos.filter((todo) => {
+    switch (filter) {
+      case 'all':
+        return !todo.removed;
+      case 'checked':
+        return todo.checked && !todo.removed;
+      case 'unchecked':
+        return !todo.checked && !todo.removed;
+      case 'removed':
+        return todo.removed;
+      default:
+        return todo;
+    }
+  });
+
   return (
     <>
       <select
@@ -83,9 +98,15 @@ export const TodoList = () => {
           console.log('送信されたよ');
         }}
       >
-        <input type='text' value={text} onChange={(e) => handleOnChange(e)} />
+        <input
+          type='text'
+          value={text}
+          disabled={filter === 'checked' || filter === 'unchecked'}
+          onChange={(e) => handleOnChange(e)}
+        />
         <button
           type='submit'
+          disabled={filter === 'checked' || filter === 'removed'}
           // onClick={() => {
           //   console.log('追加ボタンが押されたよ');
           //   handleOnSubmit();
@@ -96,7 +117,7 @@ export const TodoList = () => {
         </button>
       </form>
       <ul>
-        {todos.map((todo) => (
+        {filteredTodos.map((todo) => (
           <li key={todo.id}>
             <input
               type='checkbox'
