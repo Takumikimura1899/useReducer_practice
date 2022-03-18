@@ -2,16 +2,18 @@ import React, { useState } from 'react';
 
 type Todo = {
   value: string;
+  readonly id: number;
 };
 
 export const TodoList = () => {
   const [text, setText] = useState<string>('');
-  const [todos, setTodos] = useState<Todo[]>([{ value: 'test' }]);
+  const [todos, setTodos] = useState<Todo[]>([{ value: 'test', id: 0 }]);
 
   const handleOnSubmit = () => {
     if (!text) return;
     const newTodo: Todo = {
       value: text,
+      id: new Date().getTime(),
     };
     // console.log('formから送信されたよ');
 
@@ -46,8 +48,8 @@ export const TodoList = () => {
         </button>
       </form>
       <div>
-        {todos.map((todo, index) => (
-          <p key={index}>{todo.value}</p>
+        {todos.map((todo) => (
+          <p key={todo.id}>{todo.value}</p>
         ))}
       </div>
     </>
