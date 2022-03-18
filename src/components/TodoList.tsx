@@ -1,23 +1,34 @@
 import React, { useReducer, useState } from 'react';
 
 type State = {
-  id: number;
+  id: string;
   text: string;
 };
 
 type Action = {
-  type: 'ADD';
-  text: string;
+  type: 'ADD' | 'DELETE';
+  text?: string;
+  id?: string;
 };
 
 const reducer = (state: State[], action: Action): State[] => {
   switch (action.type) {
     case 'ADD':
-      return [...state, { id: state.slice(-1)[0].id + 1, text: action.text }];
+      return [
+        ...state,
+        { id: String(state.slice(-1)[0].id + 1), text: action.text! },
+      ];
+    case 'DELETE':
+      console.log(state);
+      console.log(action.id);
+
+      return state.filter((todo) => {
+        todo.id === action.id;
+      });
   }
 };
 
-const initialState: State[] = [{ id: 0, text: '最初のTodo' }];
+const initialState: State[] = [{ id: '0', text: '最初のTodo' }];
 
 export const TodoList = () => {
   const [text, setText] = useState<string>('test');
@@ -46,7 +57,12 @@ export const TodoList = () => {
       <button onClick={() => dispatch({ type: 'ADD', text })}>Add Todo</button>
       <ul>
         {TodoList.map((todo) => (
-          <li key={todo.id}>{todo.text}</li>
+          <li key={todo.id} id={String(todo.id)}>
+            {todo.text}
+            <button onClick={() => dispatch({ type: 'DELETE', id: '0' })}>
+              削除
+            </button>
+          </li>
         ))}
       </ul>
     </div>
