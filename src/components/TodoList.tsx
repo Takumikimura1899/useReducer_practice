@@ -1,7 +1,12 @@
 import React, { useState } from 'react';
 
+type Todo = {
+  value: string;
+};
+
 export const TodoList = () => {
   const [text, setText] = useState<string>('');
+  const [todos, setTodos] = useState<Todo[]>([{ value: 'test' }]);
 
   return (
     <>
@@ -24,6 +29,11 @@ export const TodoList = () => {
           追加
         </button>
       </form>
+      <div>
+        {todos.map((todo, index) => (
+          <p key={index}>{todo.value}</p>
+        ))}
+      </div>
     </>
   );
 };
