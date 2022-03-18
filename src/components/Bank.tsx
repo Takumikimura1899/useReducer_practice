@@ -25,5 +25,19 @@ const reducer = (state: State, action: Action) => {
 
 export const Bank = () => {
   const [state, dispatch] = useReducer(reducer, initialState);
-  return <div>Bank</div>;
+  return (
+    <div>
+      <h4>残高:{state.savings.toLocaleString()}円</h4>
+      <div className='operationArea'>
+        <div>
+          <input type='number' />
+          <span>円</span>
+        </div>
+        <div className='buttons'>
+          <button>預け入れ</button>
+          <button>引き出し</button>
+        </div>
+      </div>
+    </div>
+  );
 };
