@@ -14,6 +14,10 @@ const initialState = {
 
 const reducer = (state: State, action: Action) => {
   switch (action.type) {
+    case 'DEPOSIT':
+      return { ...state, savings: state.savings + action.payload };
+    case 'WITHDRAW':
+      return { ...state, savings: state.savings - action.payload };
     default:
       return state;
   }
