@@ -8,12 +8,23 @@ export const TodoList = () => {
   const [text, setText] = useState<string>('');
   const [todos, setTodos] = useState<Todo[]>([{ value: 'test' }]);
 
+  const handleOnSubmit = () => {
+    if (!text) return;
+    const newTodo: Todo = {
+      value: text,
+    };
+
+    setTodos([...todos, newTodo]);
+    setText('');
+  };
+
   return (
     <>
       <form
         action=''
         onSubmit={(e) => {
           e.preventDefault();
+          handleOnSubmit();
           console.log('送信されたよ');
         }}
       >
@@ -24,7 +35,11 @@ export const TodoList = () => {
         />
         <button
           type='submit'
-          onClick={() => console.log('追加ボタンが押されたよ')}
+          // onClick={() => {
+          //   console.log('追加ボタンが押されたよ');
+          //   handleOnSubmit();
+          // }}
+          onSubmit={handleOnSubmit}
         >
           追加
         </button>
