@@ -13,9 +13,14 @@ export const TodoList = () => {
     const newTodo: Todo = {
       value: text,
     };
+    // console.log('formから送信されたよ');
 
     setTodos([...todos, newTodo]);
     setText('');
+  };
+
+  const handleOnChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setText(e.target.value);
   };
 
   return (
@@ -28,11 +33,7 @@ export const TodoList = () => {
           console.log('送信されたよ');
         }}
       >
-        <input
-          type='text'
-          value={text}
-          onChange={(e) => setText(e.target.value)}
-        />
+        <input type='text' value={text} onChange={(e) => handleOnChange(e)} />
         <button
           type='submit'
           // onClick={() => {
