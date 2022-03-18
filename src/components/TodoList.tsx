@@ -1,4 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useReducer } from 'react';
+import { reducer } from '../reducer';
+import { initialState } from '../initialState';
 
 type Todo = {
   value: string;
@@ -16,6 +18,8 @@ export const TodoList = () => {
   ]);
   const [filter, setFilter] = useState<Filter>('all');
 
+  const [state, dispatch] = useReducer(reducer, initialState);
+
   const handleOnSubmit = () => {
     if (!text) return;
     const newTodo: Todo = {
@@ -31,7 +35,7 @@ export const TodoList = () => {
   };
 
   const handleOnChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setText(e.target.value);
+    dispatch({ type: 'change', text: e.target.value });
   };
 
   const handleOnEdit = (id: number, value: string) => {
@@ -109,7 +113,7 @@ export const TodoList = () => {
           >
             <input
               type='text'
-              value={text}
+              value={state.text}
               disabled={filter === 'checked'}
               onChange={(e) => handleOnChange(e)}
             />
