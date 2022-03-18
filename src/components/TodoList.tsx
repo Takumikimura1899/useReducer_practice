@@ -45,6 +45,10 @@ export const TodoList = () => {
     setTodos(newTodos);
   };
 
+  const handleOnFilter = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    dispatch({ type: 'filter', filter: e.target.value as Filter });
+  };
+
   const filteredTodos = state.todos.filter((todo) => {
     switch (state.filter) {
       case 'all':
@@ -62,10 +66,7 @@ export const TodoList = () => {
 
   return (
     <>
-      <select
-        defaultValue='all'
-        onChange={(e) => setFilter(e.target.value as Filter)}
-      >
+      <select defaultValue='all' onChange={handleOnFilter}>
         <option value='all'>全てのタスク</option>
         <option value='checked'>完了したタスク</option>
         <option value='unchecked'>現在のタスク</option>

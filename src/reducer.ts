@@ -48,6 +48,10 @@ export const reducer = (state: State, action: Action): State => {
       return { ...state, todos: newTodos };
     }
 
+    case 'filter': {
+      return { ...state, filter: action.filter };
+    }
+
     default: {
       return state;
     }
