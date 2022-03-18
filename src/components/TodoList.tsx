@@ -21,17 +21,7 @@ export const TodoList = () => {
   const [state, dispatch] = useReducer(reducer, initialState);
 
   const handleOnSubmit = () => {
-    if (!text) return;
-    const newTodo: Todo = {
-      value: text,
-      id: new Date().getTime(),
-      checked: false,
-      removed: false,
-    };
-    // console.log('formから送信されたよ');
-
-    setTodos([...todos, newTodo]);
-    setText('');
+    dispatch({ type: 'submit' });
   };
 
   const handleOnChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -49,13 +39,7 @@ export const TodoList = () => {
   };
 
   const handleOnCheck = (id: number, checked: boolean) => {
-    const newTodos = todos.map((todo) => {
-      if (todo.id === id) {
-        todo.checked = !checked;
-      }
-      return todo;
-    });
-    setTodos(newTodos);
+    dispatch({ type: 'check', id, checked });
   };
 
   const handleOnRemove = (id: number, removed: boolean) => {
@@ -73,8 +57,8 @@ export const TodoList = () => {
     setTodos(newTodos);
   };
 
-  const filteredTodos = todos.filter((todo) => {
-    switch (filter) {
+  const filteredTodos = state.todos.filter((todo) => {
+    switch (state.filter) {
       case 'all':
         return !todo.removed;
       case 'checked':
