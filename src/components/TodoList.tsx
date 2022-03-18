@@ -4,12 +4,13 @@ type Todo = {
   value: string;
   readonly id: number;
   checked: boolean;
+  removed: boolean;
 };
 
 export const TodoList = () => {
   const [text, setText] = useState<string>('');
   const [todos, setTodos] = useState<Todo[]>([
-    { value: 'test', id: 0, checked: false },
+    { value: 'test', id: 0, checked: false, removed: false },
   ]);
 
   const handleOnSubmit = () => {
@@ -18,6 +19,7 @@ export const TodoList = () => {
       value: text,
       id: new Date().getTime(),
       checked: false,
+      removed: false,
     };
     // console.log('formから送信されたよ');
 
@@ -43,6 +45,16 @@ export const TodoList = () => {
     const newTodos = todos.map((todo) => {
       if (todo.id === id) {
         todo.checked = !checked;
+      }
+      return todo;
+    });
+    setTodos(newTodos);
+  };
+
+  const handleOnRemove = (id: number, removed: boolean) => {
+    const newTodos = todos.map((todo) => {
+      if (todo.id === id) {
+        todo.removed = !removed;
       }
       return todo;
     });
@@ -76,15 +88,19 @@ export const TodoList = () => {
           <li key={todo.id}>
             <input
               type='checkbox'
+              disabled={todo.removed}
               checked={todo.checked}
               onChange={() => handleOnCheck(todo.id, todo.checked)}
             />
             <input
               type='text'
-              disabled={todo.checked}
+              disabled={todo.checked || todo.removed}
               value={todo.value}
               onChange={(e) => handleOnEdit(todo.id, e.target.value)}
             />
+            <button onClick={() => handleOnRemove(todo.id, todo.removed)}>
+              {todo.removed ? '復元' : '削除'}
+            </button>
           </li>
         ))}
       </ul>
