@@ -29,13 +29,7 @@ export const TodoList = () => {
   };
 
   const handleOnEdit = (id: number, value: string) => {
-    const newTodos = todos.map((todo) => {
-      if (todo.id === id) {
-        todo.value = value;
-      }
-      return todo;
-    });
-    setTodos(newTodos);
+    dispatch({ type: 'edit', id, value });
   };
 
   const handleOnCheck = (id: number, checked: boolean) => {

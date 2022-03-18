@@ -3,6 +3,7 @@ export const reducer = (state: State, action: Action): State => {
     case 'change': {
       return { ...state, text: action.text };
     }
+
     case 'check': {
       const newTodos = state.todos.map((todo) => {
         if (todo.id === action.id) {
@@ -12,6 +13,7 @@ export const reducer = (state: State, action: Action): State => {
       });
       return { ...state, todos: newTodos };
     }
+
     case 'submit': {
       if (!state.text) return state;
 
@@ -21,9 +23,20 @@ export const reducer = (state: State, action: Action): State => {
         checked: false,
         removed: false,
       };
-
       return { ...state, todos: [newTodo, ...state.todos], text: '' };
     }
+
+    case 'edit': {
+      const newTodos = state.todos.map((todo) => {
+        if (todo.id === action.id) {
+          todo.value = action.value;
+        }
+        return todo;
+      });
+
+      return { ...state, todos: newTodos };
+    }
+
     default: {
       return state;
     }
