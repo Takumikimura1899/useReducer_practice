@@ -45,9 +45,11 @@ export const Bank = () => {
 
   const onDeposit = (amount: number) => {
     dispatch({ type: 'DEPOSIT', payload: amount });
+    setAmount(0);
   };
   const onWithDraw = (amount: number) => {
     dispatch({ type: 'WITHDRAW', payload: amount });
+    setAmount(0);
   };
 
   return (
@@ -71,9 +73,9 @@ export const Bank = () => {
       </div>
       <div className='history'>
         <h4>履歴</h4>
-        {state.histories.map((history) => {
+        {state.histories.map((history, index) => {
           return (
-            <p>
+            <p key={index}>
               {history.operation}:{history.amount.toLocaleString()}円
             </p>
           );
