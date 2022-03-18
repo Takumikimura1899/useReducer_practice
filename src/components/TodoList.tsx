@@ -3,17 +3,21 @@ import React, { useState } from 'react';
 type Todo = {
   value: string;
   readonly id: number;
+  checked: boolean;
 };
 
 export const TodoList = () => {
   const [text, setText] = useState<string>('');
-  const [todos, setTodos] = useState<Todo[]>([{ value: 'test', id: 0 }]);
+  const [todos, setTodos] = useState<Todo[]>([
+    { value: 'test', id: 0, checked: false },
+  ]);
 
   const handleOnSubmit = () => {
     if (!text) return;
     const newTodo: Todo = {
       value: text,
       id: new Date().getTime(),
+      checked: false,
     };
     // console.log('formから送信されたよ');
 
@@ -29,6 +33,16 @@ export const TodoList = () => {
     const newTodos = todos.map((todo) => {
       if (todo.id === id) {
         todo.value = value;
+      }
+      return todo;
+    });
+    setTodos(newTodos);
+  };
+
+  const handleOnCheck = (id: number, checked: boolean) => {
+    const newTodos = todos.map((todo) => {
+      if (todo.id === id) {
+        todo.checked = !checked;
       }
       return todo;
     });
@@ -61,7 +75,13 @@ export const TodoList = () => {
         {todos.map((todo) => (
           <li key={todo.id}>
             <input
+              type='checkbox'
+              checked={todo.checked}
+              onChange={() => handleOnCheck(todo.id, todo.checked)}
+            />
+            <input
               type='text'
+              disabled={todo.checked}
               value={todo.value}
               onChange={(e) => handleOnEdit(todo.id, e.target.value)}
             />
