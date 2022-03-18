@@ -1,4 +1,4 @@
-import React, { useReducer } from 'react';
+import React, { useReducer, useState } from 'react';
 
 type State = {
   savings: number;
@@ -25,12 +25,20 @@ const reducer = (state: State, action: Action) => {
 
 export const Bank = () => {
   const [state, dispatch] = useReducer(reducer, initialState);
+  const [amount, setAmount] = useState<number>();
+
   return (
     <div>
       <h4>残高:{state.savings.toLocaleString()}円</h4>
       <div className='operationArea'>
         <div>
-          <input type='number' />
+          <input
+            type='number'
+            value={amount}
+            onChange={(e) => {
+              setAmount(Number(e.target.value));
+            }}
+          />
           <span>円</span>
         </div>
         <div className='buttons'>
