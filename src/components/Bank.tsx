@@ -25,7 +25,14 @@ const reducer = (state: State, action: Action) => {
 
 export const Bank = () => {
   const [state, dispatch] = useReducer(reducer, initialState);
-  const [amount, setAmount] = useState<number>();
+  const [amount, setAmount] = useState<number>(0);
+
+  const onDeposit = (amount: number) => {
+    dispatch({ type: 'DEPOSIT', payload: amount });
+  };
+  const onWithDraw = (amount: number) => {
+    dispatch({ type: 'WITHDRAW', payload: amount });
+  };
 
   return (
     <div>
@@ -42,8 +49,8 @@ export const Bank = () => {
           <span>円</span>
         </div>
         <div className='buttons'>
-          <button>預け入れ</button>
-          <button>引き出し</button>
+          <button onClick={() => onDeposit(amount)}>預け入れ</button>
+          <button onClick={() => onWithDraw(amount)}>引き出し</button>
         </div>
       </div>
     </div>
