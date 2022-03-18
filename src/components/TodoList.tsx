@@ -64,6 +64,11 @@ export const TodoList = () => {
     setTodos(newTodos);
   };
 
+  const handleOnEmpty = () => {
+    const newTodos = todos.filter((todo) => !todo.removed);
+    setTodos(newTodos);
+  };
+
   const filteredTodos = todos.filter((todo) => {
     switch (filter) {
       case 'all':
@@ -90,32 +95,38 @@ export const TodoList = () => {
         <option value='unchecked'>現在のタスク</option>
         <option value='removed'>ゴミ箱</option>
       </select>
-      <form
-        action=''
-        onSubmit={(e) => {
-          e.preventDefault();
-          handleOnSubmit();
-          console.log('送信されたよ');
-        }}
-      >
-        <input
-          type='text'
-          value={text}
-          disabled={filter === 'checked' || filter === 'unchecked'}
-          onChange={(e) => handleOnChange(e)}
-        />
-        <button
-          type='submit'
-          disabled={filter === 'checked' || filter === 'removed'}
-          // onClick={() => {
-          //   console.log('追加ボタンが押されたよ');
-          //   handleOnSubmit();
-          // }}
-          onSubmit={handleOnSubmit}
-        >
-          追加
-        </button>
-      </form>
+      {filter === 'removed' ? (
+        <button onClick={handleOnEmpty}>ゴミ箱を空にする</button>
+      ) : (
+        <>
+          <form
+            action=''
+            onSubmit={(e) => {
+              e.preventDefault();
+              handleOnSubmit();
+              console.log('送信されたよ');
+            }}
+          >
+            <input
+              type='text'
+              value={text}
+              disabled={filter === 'checked'}
+              onChange={(e) => handleOnChange(e)}
+            />
+            <button
+              type='submit'
+              disabled={filter === 'checked'}
+              // onClick={() => {
+              //   console.log('追加ボタンが押されたよ');
+              //   handleOnSubmit();
+              // }}
+              onSubmit={handleOnSubmit}
+            >
+              追加
+            </button>
+          </form>
+        </>
+      )}
       <ul>
         {filteredTodos.map((todo) => (
           <li key={todo.id}>
