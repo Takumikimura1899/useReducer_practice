@@ -25,6 +25,16 @@ export const TodoList = () => {
     setText(e.target.value);
   };
 
+  const handleOnEdit = (id: number, value: string) => {
+    const newTodos = todos.map((todo) => {
+      if (todo.id === id) {
+        todo.value = value;
+      }
+      return todo;
+    });
+    setTodos(newTodos);
+  };
+
   return (
     <>
       <form
@@ -47,11 +57,17 @@ export const TodoList = () => {
           追加
         </button>
       </form>
-      <div>
+      <ul>
         {todos.map((todo) => (
-          <p key={todo.id}>{todo.value}</p>
+          <li key={todo.id}>
+            <input
+              type='text'
+              value={todo.value}
+              onChange={(e) => handleOnEdit(todo.id, e.target.value)}
+            />
+          </li>
         ))}
-      </div>
+      </ul>
     </>
   );
 };
