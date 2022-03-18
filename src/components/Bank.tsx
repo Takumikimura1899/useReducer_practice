@@ -2,6 +2,7 @@ import React, { useReducer, useState } from 'react';
 
 type State = {
   savings: number;
+  histories: { operation: string; amount: number }[];
 };
 
 type Action =
@@ -10,14 +11,29 @@ type Action =
 
 const initialState = {
   savings: 100000,
+  histories: [],
 };
 
 const reducer = (state: State, action: Action) => {
   switch (action.type) {
     case 'DEPOSIT':
-      return { ...state, savings: state.savings + action.payload };
+      return {
+        ...state,
+        savings: state.savings + action.payload,
+        histories: [
+          ...state.histories,
+          { operation: '預け入れ', amount: action.payload },
+        ],
+      };
     case 'WITHDRAW':
-      return { ...state, savings: state.savings - action.payload };
+      return {
+        ...state,
+        savings: state.savings - action.payload,
+        histories: [
+          ...state.histories,
+          { operation: '引き出し', amount: action.payload },
+        ],
+      };
     default:
       return state;
   }
@@ -52,6 +68,16 @@ export const Bank = () => {
           <button onClick={() => onDeposit(amount)}>預け入れ</button>
           <button onClick={() => onWithDraw(amount)}>引き出し</button>
         </div>
+      </div>
+      <div className='history'>
+        <h4>履歴</h4>
+        {state.histories.map((history) => {
+          return (
+            <p>
+              {history.operation}:{history.amount.toLocaleString()}円
+            </p>
+          );
+        })}
       </div>
     </div>
   );
