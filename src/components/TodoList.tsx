@@ -2,22 +2,7 @@ import React, { useState, useReducer } from 'react';
 import { reducer } from '../reducer';
 import { initialState } from '../initialState';
 
-type Todo = {
-  value: string;
-  readonly id: number;
-  checked: boolean;
-  removed: boolean;
-};
-
-type Filter = 'all' | 'checked' | 'unchecked' | 'removed';
-
 export const TodoList = () => {
-  const [text, setText] = useState<string>('');
-  const [todos, setTodos] = useState<Todo[]>([
-    { value: 'test', id: 0, checked: false, removed: false },
-  ]);
-  const [filter, setFilter] = useState<Filter>('all');
-
   const [state, dispatch] = useReducer(reducer, initialState);
 
   const handleOnSubmit = () => {
@@ -86,12 +71,12 @@ export const TodoList = () => {
             <input
               type='text'
               value={state.text}
-              disabled={filter === 'checked'}
+              disabled={state.filter === 'checked'}
               onChange={(e) => handleOnChange(e)}
             />
             <button
               type='submit'
-              disabled={filter === 'checked'}
+              disabled={state.filter === 'checked'}
               // onClick={() => {
               //   console.log('追加ボタンが押されたよ');
               //   handleOnSubmit();
