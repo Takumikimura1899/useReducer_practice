@@ -41,8 +41,7 @@ export const TodoList = () => {
   };
 
   const handleOnEmpty = () => {
-    const newTodos = todos.filter((todo) => !todo.removed);
-    setTodos(newTodos);
+    dispatch({ type: 'empty' });
   };
 
   const handleOnFilter = (e: React.ChangeEvent<HTMLSelectElement>) => {
@@ -72,7 +71,7 @@ export const TodoList = () => {
         <option value='unchecked'>現在のタスク</option>
         <option value='removed'>ゴミ箱</option>
       </select>
-      {filter === 'removed' ? (
+      {state.filter === 'removed' ? (
         <button onClick={handleOnEmpty}>ゴミ箱を空にする</button>
       ) : (
         <>

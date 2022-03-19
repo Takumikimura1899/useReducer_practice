@@ -52,6 +52,11 @@ export const reducer = (state: State, action: Action): State => {
       return { ...state, filter: action.filter };
     }
 
+    case 'empty': {
+      const newTodos = state.todos.filter((todo) => !todo.removed);
+      return { ...state, todos: newTodos };
+    }
+
     default: {
       return state;
     }
